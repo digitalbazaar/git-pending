@@ -8,6 +8,10 @@ const gitGrep = require('git-grep');
 const gitBlame = require('git-blame');
 const PropTypes = require('prop-types');
 const { Color, Static, Box } = require('ink');
+const {repository: {url}} = require(path.join(process.cwd(), 'package.json'));
+
+// TODO: add branch detection
+const branch = 'master';
 
 class Finder extends React.Component {
   constructor(props) {
@@ -357,8 +361,8 @@ class Finder extends React.Component {
 
               return (
                 <Box key={hash} flexDirection='row' paddingLeft={2} paddingTop={1}>
-                  <Box width={3}>
-                    <Color blue bold>{figures('❯︎')}</Color>
+                  <Box width={5}>
+                    - [ ]
                   </Box>
                   <Box flexDirection='column'>
                     <Box marginLeft={1}><Color yellow>{comment.content}</Color></Box>
@@ -369,7 +373,7 @@ class Finder extends React.Component {
                     </Box>
                     <Box>
                       <Box marginRight={2}><Color>File:</Color></Box>
-                      <Color>{comment.filename}:{comment.finalLine}</Color>
+                      <Color>[{comment.filename}:{comment.finalLine}]({url}/blob/{branch}/{comment.filename}#L{comment.finalLine})</Color>
                     </Box>
                     <Box><Color gray>{author.name} commented {diffTime}</Color></Box>
                   </Box>
