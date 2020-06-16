@@ -278,7 +278,11 @@ class Finder extends React.Component {
 
   countTypes(comments) {
     const counters = {};
-    const availableTypes = this.commentTypes;
+    const availableTypesUnfiltered = this.commentTypes
+
+    const availableTypes = availableTypesUnfiltered.filter(function(type, pos) {
+      return availableTypesUnfiltered.indexOf(type.toLowerCase()) == pos;
+  });
 
     for (let hash in comments) {
       if (!comments.hasOwnProperty(hash)) {
